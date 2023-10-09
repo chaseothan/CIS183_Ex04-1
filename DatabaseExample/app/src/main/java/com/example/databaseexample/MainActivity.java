@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity
     ArrayList<User> userList;
 
     DatabaseHelper dbHelper;
+
+    ArrayList<String> usernames;
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +47,22 @@ public class MainActivity extends AppCompatActivity
         //we should see 4 when we run this
         Log.d("Number of records: ", dbHelper.numberOfRowsInTable() + "");
         userList = dbHelper.getAllRows();
-        displayUsers();
+
+        //for testing purposes only
+        //displayUsers();
+
+        //get all of the usernames from our table
+        usernames = dbHelper.getAllUsernames();
+
+        //Remember that this is a simple menu.  Meaning that you can only display one string per cell
+        //If you want to display multiple things in a cell you need to make a custom adapter and custom cell.
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, usernames);
+
+        //tell the listview to use the adapter
+        lv_j_users.setAdapter(adapter);
 
         addNewUserButtonEvent();
+        deleteUserEvent();
     }
 
     public void addNewUserButtonEvent() {
@@ -59,10 +77,25 @@ public class MainActivity extends AppCompatActivity
 
                 User user = new User(u, f, l);
 
+                //adding the user to the database and the arraylist
                 addNewUser(user);
 
-                displayUsers();
+                //add the username to the username arraylist
+                usernames.add(u);
 
+                //this line is easily forgotten.  You need this line so the listview will reflect the new
+                //user based off the new username added to the usernames arraylist.
+                adapter.notifyDataSetChanged();
+
+                //this is for testing only
+                //displayUsers();
+
+
+
+                //clear textboxes
+                et_j_uname.setText("");
+                et_j_fname.setText("");
+                et_j_lname.setText("");
 
                 //add to database
                 //save to an array list
@@ -73,7 +106,10 @@ public class MainActivity extends AppCompatActivity
 
     public void addNewUser(User u)
     {
+        //add user to the arraylist
         userList.add(u);
+        //add user to the database.
+        dbHelper.addNewUser(u);
     }
     public void displayUsers()
     {
@@ -81,5 +117,26 @@ public class MainActivity extends AppCompatActivity
         {
             Log.d("User: ", userList.get(i).getFname());
         }
+    }
+
+    public void deleteUserEvent()
+    {
+        lv_j_users.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+
+                //call the delete function in our dbHelpter and pass it username
+                dbHelper.deleteUser(usernames.get(i));
+                //remove the user from our userlist
+                userList.remove(i);
+                //remove the suer from our usernames
+                usernames.remove(i);
+                //update the listview to see the changes
+                adapter.notifyDataSetChanged();
+
+                return false;
+            }
+        });
     }
 }
