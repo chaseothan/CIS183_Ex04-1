@@ -2,6 +2,7 @@ package com.example.databaseexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity
 
     ArrayList<String> usernames;
     ArrayAdapter<String> adapter;
+    Intent updateIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +50,7 @@ public class MainActivity extends AppCompatActivity
         Log.d("Number of records: ", dbHelper.numberOfRowsInTable() + "");
         userList = dbHelper.getAllRows();
 
-        //for testing purposes only
-        //displayUsers();
+
 
         //get all of the usernames from our table
         usernames = dbHelper.getAllUsernames();
@@ -61,8 +62,14 @@ public class MainActivity extends AppCompatActivity
         //tell the listview to use the adapter
         lv_j_users.setAdapter(adapter);
 
+        updateIntent = new Intent(MainActivity.this, Update.class);
+
+        //for testing purposes only
+        displayUsers();
+
         addNewUserButtonEvent();
         deleteUserEvent();
+        updateUserEvent();
     }
 
     public void addNewUserButtonEvent() {
@@ -115,7 +122,8 @@ public class MainActivity extends AppCompatActivity
     {
         for(int i = 0; i < userList.size(); i++)
         {
-            Log.d("User: ", userList.get(i).getFname());
+            Log.d("User: ", userList.get(i).getUname() + "  " + userList.get(i).getFname());
+            Log.d("User: ", usernames.get(i));
         }
     }
 
@@ -136,6 +144,18 @@ public class MainActivity extends AppCompatActivity
                 adapter.notifyDataSetChanged();
 
                 return false;
+            }
+        });
+    }
+
+    public void updateUserEvent()
+    {
+        lv_j_users.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                updateIntent.putExtra("User", userList.get(i));
+                startActivity(updateIntent);
             }
         });
     }
