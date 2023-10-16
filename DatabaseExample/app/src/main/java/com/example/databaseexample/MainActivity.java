@@ -2,6 +2,7 @@ package com.example.databaseexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,10 @@ public class MainActivity extends AppCompatActivity
     EditText et_j_uname;
     Button btn_j_addUser;
     ListView lv_j_users;
+
+
+
+    Intent updateIntent;
 
     ArrayList<User> userList;
 
@@ -61,8 +66,11 @@ public class MainActivity extends AppCompatActivity
         //tell the listview to use the adapter
         lv_j_users.setAdapter(adapter);
 
+        updateIntent = new Intent(MainActivity.this, Update.class);
+
         addNewUserButtonEvent();
         deleteUserEvent();
+        updateUser();
     }
 
     public void addNewUserButtonEvent() {
@@ -116,6 +124,7 @@ public class MainActivity extends AppCompatActivity
         for(int i = 0; i < userList.size(); i++)
         {
             Log.d("User: ", userList.get(i).getFname());
+
         }
     }
 
@@ -139,4 +148,20 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+    public void updateUser()
+    {
+        lv_j_users.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                updateIntent.putExtra("User",userList.get(i));
+                Log.d("--info--", userList.get(i).getFname());
+                Log.d("user", usernames.get(i));
+                startActivity(updateIntent);
+            }
+        });
+
+    }
+
 }
+

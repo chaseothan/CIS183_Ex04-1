@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Update">
+
+    <TextView
+        android:id="@+id/tv_update_firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:text="fisrt name"
+        app:layout_constraintBottom_toBottomOf="@+id/et_update_firstName"
+        app:layout_constraintEnd_toStartOf="@+id/et_update_firstName"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_update_lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="3dp"
+        android:text="last name"
+        app:layout_constraintBottom_toBottomOf="@+id/et_update_lastName"
+        app:layout_constraintEnd_toStartOf="@+id/et_update_lastName"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_v_update_updateuserInfo"
+        android:layout_width="0dp"
+        android:layout_height="92dp"
+        android:layout_marginEnd="47dp"
+        android:text="Update"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_update_v_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_update_v_back" />
+
+    <Button
+        android:id="@+id/btn_update_v_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="292dp"
+        android:text="back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_v_update_updateuserInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_update_lastName" />
+
+    <EditText
+        android:id="@+id/et_update_firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="50dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/et_update_lastName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_update_firstName"
+        app:layout_constraintTop_toBottomOf="@+id/tv_update_v_userInfor" />
+
+    <EditText
+        android:id="@+id/et_update_lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="75dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/btn_update_v_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_update_lastName"
+        app:layout_constraintTop_toBottomOf="@+id/et_update_firstName" />
+
+    <TextView
+        android:id="@+id/tv_update_v_userInfor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="134dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="135dp"
+        android:layout_marginBottom="78dp"
+        android:text="Update User Info"
+        app:layout_constraintBottom_toTopOf="@+id/et_update_firstName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_update_firstName"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

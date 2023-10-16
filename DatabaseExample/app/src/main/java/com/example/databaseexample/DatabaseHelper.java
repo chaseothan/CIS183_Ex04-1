@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         //super is used to call the functionality of the base class SQLiteOpenHelper and
         //then executes the extended (DatabaseHelper)
 
-        super(context,DATABASE_NAME , null, 2);
+        super(context,DATABASE_NAME , null, 3);
     }
     @Override
     public void onCreate(SQLiteDatabase db)
@@ -95,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         //query to get all rows and attributes from our table
         //select * means get all attributes
-        String selectQuery = "SELECT * FROM " + TABLE_NAME + ";";
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " ORDER BY username;";
 
         //get an instance of a readable database and store it in db
         SQLiteDatabase db = this.getReadableDatabase();
@@ -150,7 +150,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         ArrayList<String> usernames = new ArrayList<String>();
 
         //query to get all usernames from table
-        String selectUserNames = "SELECT username FROM " + TABLE_NAME + ";";
+        String selectUserNames = "SELECT username FROM " + TABLE_NAME + " ORDER BY username;";
 
         //get instance of a readable database and store in db
         SQLiteDatabase db = this.getReadableDatabase();
@@ -194,6 +194,18 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    public void updateUser(User u)
+    {
+        //get writable data base
+        SQLiteDatabase db = this. getWritableDatabase();
+        //create out update command needs to look like this
+        //update users set firstname = to 'Zack', lastname = 'Moore' where username = 'Zmoore';
+        String updateCommand = "UPDATE " + TABLE_NAME  + " SET firstname = '" + u.getFname() + "' , lastname = '" + u.getLname() + "' where username = '" + u.getUname() + "';";
+//UPDATE USERS SET firstname = 'name' , lastname = 'lname' where username = 'uname';
+        db.execSQL(updateCommand);
+
+        db.close();
+    }
 
 
 }
